@@ -75,3 +75,5 @@ Account.prototype.getAccountOrders = function getAccountOrders(stock) {
   }
   return this.client.getAccountOrdersForStock(this.venue, this.account, stock);
 };
+
+module.exports = Account;

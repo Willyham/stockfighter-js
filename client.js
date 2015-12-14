@@ -5,6 +5,7 @@ var rest = require('rest');
 var pathPrefix = require('rest/interceptor/pathPrefix');
 var defaultRequest = require('rest/interceptor/defaultRequest');
 var mime = require('rest/interceptor/mime');
+var R = require('ramda');
 
 function Client(key) {
   this.key = key;
@@ -107,7 +108,7 @@ Client.prototype.getAccountOrdersForStock = function getAccountOrdersForStock(ve
 };
 
 Client.prototype._makeRequest = function _makeRequest(options) {
-  return this.client(options);
+  return this.client(options).then(R.prop('entity'));
 };
 
 module.exports = Client;
