@@ -1,5 +1,7 @@
 'use strict';
 
+var extend = require('xtend');
+
 var Client = require('./client');
 var Types = require('./types');
 
@@ -11,26 +13,36 @@ function Account(key, account, venue) {
   this.client = new Client(key);
 }
 
-Account.prototype.limitBuy = function limitBuy(symbol, price, quantity) {
-  var order = this.createOrder(symbol, price, quantity, Types.DIRECTION.BUY);
+Account.prototype.limitBuy = function limitBuy(options) {
+  var orderOptions = {
+    stock: options.stock,
+    price: options.price,
+    qty: options.quantity,
+    direction: Types.DIRECTION.BUY
+  };
+  var order = this.createOrder(orderOptions);
   return this.placeOrder(order);
 };
 
-Account.prototype.limitSell = function limitSell(symbol, price, quantity) {
-  var order = this.createOrder(symbol, price, quantity, Types.DIRECTION.SELL);
+Account.prototype.limitSell = function limitSell(options) {
+  var orderOptions = {
+    stock: options.stock,
+    price: options.price,
+    qty: options.quantity,
+    direction: Types.DIRECTION.SELL
+  };
+  var order = this.createOrder(orderOptions);
   return this.placeOrder(order);
 };
 
-Account.prototype.createOrder = function createOrder(stock, price, qty, direction, orderType) {
-  return {
+Account.prototype.createOrder = function createOrder(options) {
+  //stock, price, qty, direction, orderType
+  // TODO: validate order
+  return extend({
     venue: this.venue,
     account: this.account,
-    stock: stock,
-    price: price,
-    qty: qty,
-    direction: direction,
-    orderType: orderType || Types.ORDER_TYPES.LIMIT
-  };
+    orderType: Types.ORDER_TYPES.LIMIT
+  }, options);
 };
 
 Account.prototype.placeOrder = function placeOrder(order) {
