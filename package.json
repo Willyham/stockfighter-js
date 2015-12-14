@@ -1,0 +1,24 @@
+{
+  "name": "stockfighter-js",
+  "version": "0.1",
+  "description": "Stockfighter client in node",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard -v --reporter stylish && echo '# linter passed'",
+    "cover": "NODE_ENV=test istanbul cover --report cobertura --print both tape -- `find test/ -name '*.tap.js'`",
+    "view-cover": "NODE_ENV=test istanbul cover --report html tape -- `find test/ -name '*.tap.js'` && opn coverage/index.html",
+    "test": "NODE_ENV=test npm run lint && NODE_ENV=test npm run cover"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rest": "^1.3.1",
+    "url-join": "0.0.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.1",
+    "opn-cli": "^1.0.0",
+    "tape": "^4.2.2",
+    "uber-standard": "^5.1.0"
+  }
+}
